@@ -19,26 +19,134 @@
 
 ## 快速开始
 
-通过 [skills CLI](https://skills.sh/) 一键安装到你的项目：
+通过 [skills CLI](https://skills.sh/) 安装，需要 Node.js ≥ 18。
+
+### 一次性安装全部 skills（推荐）
 
 ```bash
-# 安装单个 skill（推荐）
-npx skills add Yttehs-HDX/agent-collab-skills@declare-session-mode
+npx skills add Yttehs-HDX/agent-collab-skills@declare-session-mode \
+               Yttehs-HDX/agent-collab-skills@designer-design-card \
+               Yttehs-HDX/agent-collab-skills@project-manager-bootstrap \
+               Yttehs-HDX/agent-collab-skills@stop-and-converge \
+               Yttehs-HDX/agent-collab-skills@review-architecture-audit \
+               Yttehs-HDX/agent-collab-skills@decision-assumption-log \
+               Yttehs-HDX/agent-collab-skills@mode-switch-gate
+```
 
-# 全局安装（用户级，跨项目可用）
-npx skills add Yttehs-HDX/agent-collab-skills@designer-design-card -g -y
+加 `-g -y` 可全局静默安装（跨项目可用）：
 
-# 浏览本仓库下所有可安装的 skills
+```bash
+npx skills add Yttehs-HDX/agent-collab-skills@declare-session-mode \
+               Yttehs-HDX/agent-collab-skills@designer-design-card \
+               Yttehs-HDX/agent-collab-skills@project-manager-bootstrap \
+               Yttehs-HDX/agent-collab-skills@stop-and-converge \
+               Yttehs-HDX/agent-collab-skills@review-architecture-audit \
+               Yttehs-HDX/agent-collab-skills@decision-assumption-log \
+               Yttehs-HDX/agent-collab-skills@mode-switch-gate -g -y
+```
+
+安装后，`SKILL.md` 会被复制到项目的 `.skills/` 或 `~/.agents/skills/` 下，Coding Agent 会自动读取。
+
+### 按需安装单个 skill
+
+```bash
+npx skills add Yttehs-HDX/agent-collab-skills@<skill-name>
+```
+
+可选 skill 名称见 [skills/index.md](skills/index.md) 或下方使用指南。
+
+### 搜索本仓库
+
+```bash
 npx skills find agent-collab
 ```
 
-安装后，skill 的 `SKILL.md` 会被复制到你项目的 `.skills/` 或 `~/.agents/skills/` 下，Coding Agent 会自动读取。
+## 使用指南
 
-或手动使用：
+安装完成后，按项目阶段选择对应 skill：
 
-1. 浏览 [skills/index.md](skills/index.md) 找到当前阶段需要的 skill。
-2. 打开对应 `skills/<name>/SKILL.md`，把「输入 / Prompt」段直接粘到 Agent session 开头。
-3. 项目演化时，参照 [skills/mode-switch-gate/SKILL.md](skills/mode-switch-gate/SKILL.md) 切换 skill。
+### 1. 每个 session 开头：声明模式
+
+```bash
+npx skills add Yttehs-HDX/agent-collab-skills@declare-session-mode
+```
+
+**何时用**：打开任何 Agent 对话前，先声明当前是 Designer / Project Manager / Review / Harden 哪种模式。这是避免 Agent 与你预期错位的最小成本动作。
+
+> 快速原则：**模式未声明是最危险的状态。**
+
+---
+
+### 2. 快速搭原型（Project Manager Mode）
+
+```bash
+npx skills add Yttehs-HDX/agent-collab-skills@project-manager-bootstrap
+npx skills add Yttehs-HDX/agent-collab-skills@decision-assumption-log
+```
+
+**何时用**：想在一个 session 内让 Agent 自主推进，快速跑通端到端 demo。  
+**配套**：`decision-assumption-log` 强制 Agent 把假设和技术选择记录到 `ASSUMPTIONS.md` / `DECISIONS.md`，防止产出变黑箱。
+
+---
+
+### 3. 原型跑通后：收束与审查
+
+```bash
+npx skills add Yttehs-HDX/agent-collab-skills@stop-and-converge
+npx skills add Yttehs-HDX/agent-collab-skills@review-architecture-audit
+```
+
+**何时用**：核心路径已经可以运行、或 Agent 开始建议「顺便加 X」时。  
+先用 `stop-and-converge` 让 Agent 停止产出，再用 `review-architecture-audit` 输出 10 段架构审查报告，区分真实核心与 demo 临时方案。
+
+---
+
+### 4. 重构核心逻辑（Designer Mode）
+
+```bash
+npx skills add Yttehs-HDX/agent-collab-skills@designer-design-card
+```
+
+**何时用**：需要改动核心抽象、模块边界、状态模型，或任何「改错了很难回滚」的地方。  
+Skill 会要求 Agent 每轮先发设计卡片，经你确认后才能写代码，每轮最多改 3 个文件。
+
+---
+
+### 5. 在里程碑节点自检：决定下一步模式
+
+```bash
+npx skills add Yttehs-HDX/agent-collab-skills@mode-switch-gate
+```
+
+**何时用**：每次阶段汇报之后，或「感觉不对但说不出来」的时候。  
+Skill 提供一张自检卡片和信号表，帮你判断应该继续当前模式、切到 Review、切到 Designer，还是先 `stop-and-converge`。
+
+---
+
+### 推荐生命周期
+
+```text
+新想法
+  └─ declare-session-mode（声明 PM Mode）
+       └─ project-manager-bootstrap ───────────────────┐
+          + decision-assumption-log（全程记录）          │
+                                                       ▼
+                                            stop-and-converge（闭环跑通后）
+                                                       │
+                                                       ▼
+                                            review-architecture-audit
+                                                       │
+                                                       ▼
+                                        declare-session-mode（声明 Designer Mode）
+                                                       │
+                                                       ▼
+                                           designer-design-card（逐片重构）
+                                                       │
+                                                  mode-switch-gate
+                                               （每里程碑自检，决定继续/切换）
+```
+
+详细各 skill 说明见 [skills/index.md](skills/index.md)。
 
 ## 目录索引
 
@@ -61,4 +169,4 @@ npx skills find agent-collab
 
 ## License
 
-MIT — 见 [LICENSE](LICENSE)。如需更换（Apache-2.0 / CC-BY 等），直接替换该文件。
+MIT — 见 [LICENSE](LICENSE)。
