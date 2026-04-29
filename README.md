@@ -25,25 +25,25 @@
 ### 一次性安装全部 skills（推荐）
 
 ```bash
-npx skills add Yttehs-HDX/agent-collab-skills@declare-session-mode \
-               Yttehs-HDX/agent-collab-skills@designer-design-card \
-               Yttehs-HDX/agent-collab-skills@project-manager-bootstrap \
-               Yttehs-HDX/agent-collab-skills@stop-and-converge \
-               Yttehs-HDX/agent-collab-skills@review-architecture-audit \
-               Yttehs-HDX/agent-collab-skills@decision-assumption-log \
-               Yttehs-HDX/agent-collab-skills@mode-switch-gate
+npx skills add Yttehs-HDX/agent-collab-skills@declare-session-mode
+npx skills add Yttehs-HDX/agent-collab-skills@designer-design-card
+npx skills add Yttehs-HDX/agent-collab-skills@project-manager-bootstrap
+npx skills add Yttehs-HDX/agent-collab-skills@stop-and-converge
+npx skills add Yttehs-HDX/agent-collab-skills@review-architecture-audit
+npx skills add Yttehs-HDX/agent-collab-skills@decision-assumption-log
+npx skills add Yttehs-HDX/agent-collab-skills@mode-switch-gate
 ```
 
 加 `-g -y` 可全局静默安装（跨项目可用）：
 
 ```bash
-npx skills add Yttehs-HDX/agent-collab-skills@declare-session-mode \
-               Yttehs-HDX/agent-collab-skills@designer-design-card \
-               Yttehs-HDX/agent-collab-skills@project-manager-bootstrap \
-               Yttehs-HDX/agent-collab-skills@stop-and-converge \
-               Yttehs-HDX/agent-collab-skills@review-architecture-audit \
-               Yttehs-HDX/agent-collab-skills@decision-assumption-log \
-               Yttehs-HDX/agent-collab-skills@mode-switch-gate -g -y
+npx skills add Yttehs-HDX/agent-collab-skills@declare-session-mode -g -y
+npx skills add Yttehs-HDX/agent-collab-skills@designer-design-card -g -y
+npx skills add Yttehs-HDX/agent-collab-skills@project-manager-bootstrap -g -y
+npx skills add Yttehs-HDX/agent-collab-skills@stop-and-converge -g -y
+npx skills add Yttehs-HDX/agent-collab-skills@review-architecture-audit -g -y
+npx skills add Yttehs-HDX/agent-collab-skills@decision-assumption-log -g -y
+npx skills add Yttehs-HDX/agent-collab-skills@mode-switch-gate -g -y
 ```
 
 安装后，`SKILL.md` 会被复制到项目的 `.skills/` 或 `~/.agents/skills/` 下，Coding Agent 会自动读取。
