@@ -1,0 +1,19 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Obsidian (本仓库不管理 Obsidian 工作区配置)
+.obsidian/
+
+# Logs
+*.log
+
+# Local notes / drafts
+.scratch/
+TODO.local.md
