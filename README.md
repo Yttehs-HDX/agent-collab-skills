@@ -48,13 +48,11 @@ npx skills add Yttehs-HDX/agent-collab-skills@declare-session-mode \
 
 安装后，`SKILL.md` 会被复制到项目的 `.skills/` 或 `~/.agents/skills/` 下，Coding Agent 会自动读取。
 
-### 按需安装单个 skill
+### ~~按需安装单个 skill~~
 
-```bash
-npx skills add Yttehs-HDX/agent-collab-skills@<skill-name>
-```
-
-可选 skill 名称见 [skills/index.md](skills/index.md) 或下方使用指南。
+~~```bash~~
+~~npx skills add Yttehs-HDX/agent-collab-skills@<skill-name>~~
+~~```~~
 
 ### 搜索本仓库
 
